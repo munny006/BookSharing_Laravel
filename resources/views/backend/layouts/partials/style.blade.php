@@ -7,5 +7,7 @@
 	
 	<link href="{{ asset('admin-asset/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('admin-asset/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('admin-asset/css/select2.min.css') }}" rel="stylesheet">
 <!-- Custom styles for this template-->
 	<link href="{{ asset('admin-asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('admin-asset/css/custom.css') }}" rel="stylesheet">

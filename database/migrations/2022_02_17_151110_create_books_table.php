@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             $table->string('isbn')->nullable();
             $table->string('publish_year')->nullable();
             $table->text('description')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
 
             $table->boolean('is_approved')->default(0);
             $table->unsignedInteger('total_view')->default(0);

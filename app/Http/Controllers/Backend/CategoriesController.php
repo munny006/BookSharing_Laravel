@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Publisher;
+use App\Models\Category;
 use Illuminate\Support\Str;
-class PublisherController extends Controller
+
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,10 @@ class PublisherController extends Controller
      */
     public function index()
     {
-       $publishers = Publisher::all();
-       return view('backend.pages.publishers.index',compact('publishers'));
-   }
+     $categories = Category::all();
+     $parent_categories = Category::where('parent_id',null)->get();
+     return view('backend.pages.categories.index',compact('categories','parent_categories'));
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -37,23 +39,27 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        
-     $request->validate([
+      $request->validate([
         'name' => 'required',
-        'link' => 'nullable|url',
+        'slug' => 'nullable',
         
         'description' => 'nullable',
     ]);
-     $publisher = new Publisher();
-     $publisher->name = $request->name;
-     $publisher->link = $request->link;
-     $publisher->address= $request->address;
-     $publisher->outlet= $request->outlet;
-     $publisher->description = $request->description ;
-     $publisher->save();
-     session()->flash('success','publisher has been created !!');
-     return  back();
- }
+      $category = new Category();
+      $category->name = $request->name;
+     
+      if(empty($request->slug)){
+         $category->slug = Str::slug($request->name);
+      }
+      else{
+         $category->slug = $request->slug;
+      }
+     $category->parent_id = $request->parent_id ;
+      $category->description = $request->description ;
+      $category->save();
+      session()->flash('success','Category has been created !!');
+      return  back();
+  }
 
     /**
      * Display the specified resource.
@@ -88,20 +94,25 @@ class PublisherController extends Controller
     {
        $request->validate([
         'name' => 'required',
-        'link' => 'nullable|url',
+        'slug' => 'nullable',
         
         'description' => 'nullable',
     ]);
-       $publisher =Publisher::find($id);
-       $publisher->name = $request->name;
-       $publisher->link = $request->link;
-       $publisher->address= $request->address;
-       $publisher->outlet= $request->outlet;
-       $publisher->description = $request->description ;
-       $publisher->save();
-       session()->flash('success','publisher has been Updated !!');
-       return  back();
-   }
+      $category = Category::find($id);
+      $category->name = $request->name;
+     
+      if(empty($request->slug)){
+         $category->slug = Str::slug($request->name);
+      }
+      else{
+         $category->slug = $request->slug;
+      }
+     $category->parent_id = $request->parent_id ;
+      $category->description = $request->description ;
+      $category->save();
+      session()->flash('success','Category has been Updated !!');
+      return  back();
+}
 
     /**
      * Remove the specified resource from storage.
@@ -111,11 +122,15 @@ class PublisherController extends Controller
      */
     public function delete($id)
     {
+        $child_categories = Category::where('parent_id',$id)->get();
         
-        $publisher =Publisher::find($id);
+        foreach ($child_categories as $child) {
+            $child->delete();
+        }
+        $category =Category::find($id);
 
-        $publisher->delete();
-        session()->flash('success','publisher has been deleted !!');
+        $category->delete();
+        session()->flash('success','Category has been deleted !!');
         return  back();
     }
 }

@@ -17,7 +17,7 @@ Route::get('/','PagesController@index')->name('index');
 Route::get('/books/singel','BooksController@show')->name('books.show');
 
 Route::get('/admin','backend\PagesController@index')->name('index');
-
+Route::get('/books/categories/{slug}','backend\CategoriesController@show')->name('categories.show');
 
 //admin
 Route::group(['prefix' => 'admin'],function(){
@@ -28,7 +28,10 @@ Route::group(['prefix' => 'admin'],function(){
 //Books
 Route::group(['prefix' => 'books'],function(){
 	Route::get('/','Backend\BooksController@index')->name('admin.books.index');
-	Route::get('/{id}','Backend\BooksController@show')->name('admin.books.show');
+	//Route::get('/{id}','Backend\BooksController@show')->name('admin.books.show');
+	Route::get('/create','Backend\BooksController@create')->name('admin.books.create');
+	Route::post('/store','Backend\BooksController@store')->name('admin.books.store');
+	Route::post('/delete/{id}','Backend\BooksController@delete')->name('admin.books.delete');
 	
 });
 
