@@ -30,6 +30,8 @@ Route::group(['prefix' => 'books'],function(){
 	Route::get('/','Backend\BooksController@index')->name('admin.books.index');
 	//Route::get('/{id}','Backend\BooksController@show')->name('admin.books.show');
 	Route::get('/create','Backend\BooksController@create')->name('admin.books.create');
+	Route::get('/edit/{id}','Backend\BooksController@edit')->name('admin.books.edit');
+	Route::post('/update/{id}','Backend\BooksController@update')->name('admin.books.update');
 	Route::post('/store','Backend\BooksController@store')->name('admin.books.store');
 	Route::post('/delete/{id}','Backend\BooksController@delete')->name('admin.books.delete');
 	
@@ -66,3 +68,6 @@ Route::group(['prefix' => 'publishers'],function(){
 	Route::post('/delete/{id}','Backend\PublisherController@delete')->name('admin.publishers.delete');
 	
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 @section('admin-content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-	<h1 class="h3 mb-0 text-gray-800">Create New Book</h1>
+	<h1 class="h3 mb-0 text-gray-800">Edit Book - {{ $book->title }}</h1>
 	
 </div>
 @include('backend.layouts.partials.message')
@@ -13,13 +13,13 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<label>Book Title</label>
-					<input type="text" name="title" class="form-control" placeholder="Book Title">
+					<input type="text" name="title" class="form-control" placeholder="Book Title" value="{{ $book->title }}">
 
 				</div>
 
 				<div class="col-sm-6">
 					<label>Book URL</label>
-					<input type="text" name="slug" class="form-control" placeholder="Book URL">
+					<input type="text" name="slug" class="form-control" placeholder="Book URL"value="{{ $book->slug }}">
 
 				</div>
 				<div class="col-sm-6">
@@ -28,7 +28,7 @@
 					<select name="category_id" id="category_id" class="form-control">
 						<option value="">Select a Category</option>
 						@foreach($categories as $category)
-						<option value="{{$category->id}}">{{$category->name}}</option>
+						<option value="{{$category->id}}"{{ $book->category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
 						@endforeach
 
 					</select>
@@ -41,7 +41,7 @@
 					<select name="author_ids[]" id="author_id" class="form-control select2" multiple="">
 						<option value="">Select a Author</option>
 						@foreach($authors as $author)
-						<option value="{{$author->id}}">{{$author->name}}</option>
+						<option value="{{$author->id}}" {{ App\Models\Book::isAuthorSeleted($book->id,$author->id) ? 'selected' : '' }}>{{$author->name}}</option>
 						@endforeach
 
 					</select>
@@ -52,7 +52,7 @@
 				<div class="col-sm-6">
 					<br>
 					<label>Book ISBN</label>
-					<input type="text" name="isbn" class="form-control" placeholder="Book ISBN">
+					<input type="text" name="isbn" class="form-control" placeholder="Book ISBN" value="{{ $book->isbn }}">
 
 				</div>
 
@@ -65,7 +65,7 @@
 					<select name="publisher_id" id="publisher_id" class="form-control">
 						<option value="">Select a Publisher</option>
 						@foreach($publishers as $publisher)
-						<option value="{{$publisher->id}}">{{$publisher->name}}</option>
+						<option value="{{$publisher->id}}" {{ $book->publisher_id == $publisher->id ? 'selected' : '' }}>{{$publisher->name}}</option>
 						@endforeach
 
 					</select>
@@ -78,7 +78,7 @@
 					<select name="publish_year" id="publish_year" class="form-control">
 						<option value="">Select a Publication Year</option>
 						@for($year =date('Y') ; $year >= 1900 ; $year--)
-						<option value="{{ $year }}">{{ $year }}</option>
+						<option value="{{ $year }}" {{ $book->publish_year == $year ? 'selected' : '' }}>{{ $year }}</option>
 						@endfor
 					</select>
 
@@ -95,8 +95,8 @@
 					<label>Book Translator</label>
 					<select name="translator_id" id="translator_id" class="form-control select2">
 						<option value="">Select a Translator Book</option>
-						@foreach($books as $book)
-						<option value="{{$book->id}}">{{$book->title}}</option>
+						@foreach($books as $tb)
+						<option value="{{$book->id}}"{{ $tb->id == $book->translator_id ? 'selected':'' }}>{{$tb->title}}</option>
 						@endforeach
 
 					</select>
@@ -109,7 +109,7 @@
 				<div class="col-sm-12">
 					<br>
 					<label>Book Details</label>
-					<textarea class="form-control" name="description" id="summernote" placeholder="Book Details" cols="4" rows="3"></textarea>
+					<textarea class="form-control" name="description" id="summernote" placeholder="Book Details" cols="4" rows="3">{!!$book->description !!}</textarea>
 
 				</div>
 
