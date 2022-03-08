@@ -68,6 +68,6 @@ Route::group(['prefix' => 'publishers'],function(){
 	Route::post('/delete/{id}','Backend\PublisherController@delete')->name('admin.publishers.delete');
 	
 });
-Auth::routes();
+Auth::routes(['verify' =>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
