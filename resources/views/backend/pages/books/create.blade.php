@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<form action="{{ route('admin.books.store') }}" method="post" enctype="multipart/form-data">
+		<form action="{{ route('admin.books.store') }}" method="post" enctype="multipart/ form-data">
 			@csrf
 			<div class="row">
 				<div class="col-sm-6">
@@ -22,6 +22,9 @@
 					<input type="text" name="slug" class="form-control" placeholder="Book URL">
 
 				</div>
+			</div>
+			<div class="row">
+			
 				<div class="col-sm-6">
 					<br>
 					<label>Book Category</label>
@@ -48,18 +51,16 @@
 
 				</div>
 
-
+			</div>
+			<div class="row">
+			
 				<div class="col-sm-6">
 					<br>
 					<label>Book ISBN</label>
 					<input type="text" name="isbn" class="form-control" placeholder="Book ISBN">
 
 				</div>
-
-
-
-
-				<div class="col-sm-6">
+          <div class="col-sm-6">
 					<br>
 					<label>Book Publisher</label>
 					<select name="publisher_id" id="publisher_id" class="form-control">
@@ -72,6 +73,9 @@
 
 				</div>
 
+			</div>
+
+				<div class="row">
 				<div class="col-sm-6">
 					<br>
 					<label>Book Publication Year</label>
@@ -89,7 +93,8 @@
 					<label>Book Image</label>
 					<input type="file" name="image" class="form-control" required="">
 				</div>
-
+				
+				
 				<div class="col-sm-6">
 					<br>
 					<label>Book Translator</label>
@@ -102,27 +107,30 @@
 					</select>
 
 				</div>
-
-
-
-
+				
+				
 				<div class="col-sm-12">
 					<br>
 					<label>Book Details</label>
 					<textarea class="form-control" name="description" id="summernote" placeholder="Book Details" cols="4" rows="3"></textarea>
 
 				</div>
+			</div>
+			</div>
 
 			</div>
 			<br>
 			<br>
 			<button type="submit" class="btn btn-primary">Save changes</button>
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<br>
 		</form>
+
 
 
 	</div>
 
 </div>
+<br>
 
 @endsection

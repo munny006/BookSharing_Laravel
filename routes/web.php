@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','PagesController@index')->name('index');
 Route::get('/books/singel','BooksController@show')->name('books.show');
+Route::get('/books/upload/new','BooksController@create')->name('books.upload');
+Route::post('/books/upload/post','BooksController@store')->name('books.store');
 
 Route::get('/admin','backend\PagesController@index')->name('index');
 Route::get('/books/categories/{slug}','backend\CategoriesController@show')->name('categories.show');
@@ -23,6 +25,12 @@ Route::get('/books/categories/{slug}','backend\CategoriesController@show')->name
 Route::group(['prefix' => 'admin'],function(){
 	Route::get('/admin','Backend\PagesController@index')->name('admin.index');
 
+});
+
+Route::group(['prefix' =>'user'],function(){
+
+	Route::get('/profile/{username}','UsersController@profile')->name('users.profile');
+	Route::get('/profile/{username}/books','UsersController@books')->name('users.books');
 });
 
 //Books
